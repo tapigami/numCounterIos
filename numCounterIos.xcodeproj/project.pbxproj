@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08E88EE421415AFA005F9D78 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E88EE321415AFA005F9D78 /* RealmSwift.framework */; };
+		08E88EE621415B0B005F9D78 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E88EE521415B0A005F9D78 /* Realm.framework */; };
 		1D676C71213DEEDC001849EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D676C70213DEEDC001849EE /* AppDelegate.swift */; };
 		1D676C73213DEEDC001849EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D676C72213DEEDC001849EE /* ViewController.swift */; };
 		1D676C79213DEEDC001849EE /* numCounterIos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D676C77213DEEDC001849EE /* numCounterIos.xcdatamodeld */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08E88EE321415AFA005F9D78 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		08E88EE521415B0A005F9D78 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		1D676C6D213DEEDC001849EE /* numCounterIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = numCounterIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D676C70213DEEDC001849EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D676C72213DEEDC001849EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08E88EE621415B0B005F9D78 /* Realm.framework in Frameworks */,
+				08E88EE421415AFA005F9D78 /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08E88EE221415AFA005F9D78 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08E88EE521415B0A005F9D78 /* Realm.framework */,
+				08E88EE321415AFA005F9D78 /* RealmSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1D676C64213DEEDC001849EE = {
 			isa = PBXGroup;
 			children = (
 				1D676C6F213DEEDC001849EE /* numCounterIos */,
 				1D676C6E213DEEDC001849EE /* Products */,
+				08E88EE221415AFA005F9D78 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +90,7 @@
 				1D676C69213DEEDC001849EE /* Sources */,
 				1D676C6A213DEEDC001849EE /* Frameworks */,
 				1D676C6B213DEEDC001849EE /* Resources */,
+				08E88EE721415B28005F9D78 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -128,6 +145,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		08E88EE721415B28005F9D78 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-framework";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D676C69213DEEDC001849EE /* Sources */ = {
@@ -273,6 +308,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = numCounterIos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -290,6 +329,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = numCounterIos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
