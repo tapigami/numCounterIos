@@ -7,42 +7,91 @@
 //
 
 import UIKit
+import RealmSwift
 
 class ViewController: UIViewController {
     var textField: UITextField!
     var titleText = ""
+    var button : UIButton!
+    var currentAction: Action?
+    private var realm: Realm!
+    
+ //   override func awakeFromNib() {
+   //     super.awakeFromNib()
+        
+        // RealmのTodoリストを取得し，更新を監視
+     //   realm = try! Realm()
+       // let act = realm.objects(Act.self)
+//        titleText = act[0].title
+  //  }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        realm = try! Realm()
+        currentAction = realm.objects(Action.self).last
+        
         view.backgroundColor = .blue
         textField = UITextField()
-        //textfieldの位置とサイズを設定
         textField.frame = CGRect(x: self.view.frame.width / 2 - 100, y: self.view.frame.height / 2 - 15, width: 200, height: 30)
-        //アウトラインを表示
         textField.borderStyle = .roundedRect
         textField.delegate = self
-        //改行ボタンを完了ボタンに変更
         textField.returnKeyType = .done
-
-        //文字が何も入力されていない時に表示される文字(薄っすら見える文字)
         textField.placeholder = "hogeho"
-
+        
         view.addSubview(textField)
+        button = UIButton()
+        
+        button.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        button.addTarget(self, action: #selector(hoge(sender: )), for: .touchUpInside)
+        // buttonにイベントを追加
+        
+        
+        button.setTitle("Tap me", for: .normal)
+        self.view.addSubview(button)
+
+        if currentAction != nil {
+            let label = UILabel()
+            label.backgroundColor = .orange
+            label.frame = CGRect(x: 100, y: 200, width: 100, height: 100)
+            label.text = "\(currentAction!.title): \(currentAction!.commit)"
+            label.textColor = .white
+            self.view.addSubview(label)
+            
+            let commitButton = UIButton()
+            
+            commitButton.frame = CGRect(x: 200, y: 200, width: 100, height: 100)
+            commitButton.addTarget(self, action: #selector(commit(sender: )), for: .touchUpInside)
+            commitButton.setTitle("commmit", for: .normal)
+            self.view.addSubview(commitButton)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    @objc func hoge(sender:UIButton) {
+        realm = try! Realm()
+        try! realm.write {
+                realm.add(Action(value: ["title": titleText]))
+        }
+        viewDidLoad()
+    }
+    @objc func commit(sender: UIButton) {
+        realm = try! Realm()
+        try! realm.write {
+          currentAction!.commit = currentAction!.commit + 1
+        }
+        viewDidLoad()
+        
+    }
 
 }
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         titleText = textField.text!
-        print(titleText)
         return true
     }
 
